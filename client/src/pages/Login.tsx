@@ -185,7 +185,7 @@ export default function Login() {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/verify-phone`,
+          redirectTo: `${window.location.origin}/dashboard`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -194,7 +194,12 @@ export default function Login() {
       });
       
       if (error) {
-        throw error;
+        console.error("Google sign-in error:", error);
+        toast({
+          title: "Google Sign-In Error",
+          description: error.message || "Failed to sign in with Google",
+          variant: "destructive",
+        });
       }
       
       // The user will be redirected to Google OAuth consent screen
@@ -228,7 +233,12 @@ export default function Login() {
       });
       
       if (error) {
-        throw error;
+        console.error("Google sign-in error:", error);
+        toast({
+          title: "Google Sign-In Error",
+          description: error.message || "Failed to sign in with Google",
+          variant: "destructive",
+        });
       }
       
       // The user will be redirected to Google OAuth flow
@@ -240,6 +250,7 @@ export default function Login() {
         description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
