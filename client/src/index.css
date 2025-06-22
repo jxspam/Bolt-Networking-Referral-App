@@ -1,0 +1,329 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.75rem;
+  
+  /* Enhanced Network Earnings colors matching Figma */
+  --primary-blue: hsl(207, 90%, 54%);
+  --primary-blue-dark: hsl(223, 87%, 60%);
+  --primary-blue-light: hsl(207, 90%, 94%);
+  --sidebar-bg: hsl(0, 0%, 100%);
+  --content-bg: hsl(210, 40%, 98%);
+  --success: hsl(142, 76%, 36%);
+  --success-light: hsl(142, 76%, 94%);
+  --warning: hsl(38, 92%, 50%);
+  --warning-light: hsl(38, 92%, 94%);
+  --danger: hsl(0, 84%, 60%);
+  --danger-light: hsl(0, 84%, 94%);
+  --gray-50: hsl(210, 20%, 98%);
+  --gray-100: hsl(210, 20%, 95%);
+  --gray-200: hsl(210, 16%, 93%);
+  --gray-300: hsl(210, 14%, 89%);
+  --gray-400: hsl(210, 14%, 83%);
+  --gray-500: hsl(210, 11%, 71%);
+  --gray-600: hsl(210, 7%, 56%);
+  --gray-700: hsl(210, 9%, 31%);
+  --gray-800: hsl(210, 10%, 23%);
+  --gray-900: hsl(210, 11%, 15%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gray-50 text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+    line-height: 1.2;
+  }
+}
+
+@layer components {
+  .gradient-header {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .sidebar-item {
+    @apply flex items-center space-x-3 px-4 py-3 rounded-xl text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200 cursor-pointer;
+    font-weight: 500;
+  }
+  
+  .sidebar-item.active {
+    @apply bg-blue-100 text-blue-700 shadow-sm;
+    border-left: 4px solid var(--primary-blue);
+    background: linear-gradient(90deg, var(--primary-blue-light) 0%, transparent 100%);
+  }
+  
+  .status-badge {
+    @apply text-xs font-semibold px-3 py-1.5 rounded-full border;
+    font-weight: 600;
+  }
+  
+  .status-pending {
+    @apply bg-yellow-50 text-yellow-700 border-yellow-200;
+  }
+  
+  .status-approved {
+    @apply bg-green-50 text-green-700 border-green-200;
+  }
+  
+  .status-rejected {
+    @apply bg-red-50 text-red-700 border-red-200;
+  }
+  
+  .status-completed {
+    @apply bg-blue-50 text-blue-700 border-blue-200;
+  }
+  
+  .status-escalated {
+    @apply bg-purple-50 text-purple-700 border-purple-200;
+  }
+  
+  .chart-container {
+    @apply relative h-48 w-full;
+  }
+
+  .card-enhanced {
+    @apply bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200;
+  }
+
+  .button-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
+  .button-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold px-6 py-3 rounded-xl transition-all duration-200;
+  }
+
+  .input-enhanced {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200;
+  }
+
+  .metric-card {
+    @apply bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200;
+  }
+
+  .metric-value {
+    @apply text-3xl font-bold text-gray-900;
+  }
+
+  .metric-label {
+    @apply text-sm font-medium text-gray-600 mb-2;
+  }
+
+  .metric-change {
+    @apply text-sm font-medium flex items-center mt-2;
+  }
+
+  .metric-change.positive {
+    @apply text-green-600;
+  }
+
+  .metric-change.negative {
+    @apply text-red-600;
+  }
+
+  .table-enhanced {
+    @apply w-full bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden;
+  }
+
+  .table-header {
+    @apply bg-gray-50 border-b border-gray-100;
+  }
+
+  .table-row {
+    @apply border-b border-gray-50 hover:bg-gray-100 transition-colors duration-150;
+  }
+
+  .table-cell {
+    @apply px-6 py-4 text-sm;
+  }
+
+  .avatar-enhanced {
+    @apply rounded-full border-2 border-white shadow-sm;
+  }
+
+  .notification-dot {
+    @apply absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white;
+  }
+
+  .progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-2 overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full bg-blue-600 rounded-full transition-all duration-300;
+  }
+
+  .dropdown-enhanced {
+    @apply bg-white rounded-xl shadow-lg border border-gray-100 py-2 min-w-48;
+  }
+
+  .dropdown-item {
+    @apply px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer transition-colors duration-150;
+  }
+
+  .search-input {
+    @apply w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white;
+  }
+
+  .filter-button {
+    @apply inline-flex items-center px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-150;
+  }
+
+  .tab-button {
+    @apply px-6 py-3 text-sm font-medium rounded-lg transition-all duration-200;
+  }
+
+  .tab-button.active {
+    @apply bg-blue-600 text-white shadow-sm;
+  }
+
+  .tab-button.inactive {
+    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+  }
+
+  .loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600;
+  }
+
+  .empty-state {
+    @apply text-center py-12 px-6;
+  }
+
+  .empty-state-icon {
+    @apply mx-auto h-12 w-12 text-gray-400 mb-4;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-semibold text-gray-900 mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-gray-600 max-w-sm mx-auto;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+/* Animation keyframes */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .sidebar-item {
+    @apply px-3 py-2;
+  }
+  
+  .metric-card {
+    @apply p-4;
+  }
+  
+  .table-cell {
+    @apply px-4 py-3;
+  }
+}
