@@ -14,7 +14,8 @@
     "test": "vitest",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "cd client && npm run preview",
-    "install-deps": "npm install && cd client && npm install"
+    "install": "npm install --prefix . && npm install --prefix client",
+    "postinstall": "npm run install"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
