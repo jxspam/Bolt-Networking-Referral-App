@@ -57,7 +57,6 @@
     "wouter": "^2.12.1"
   },
   "devDependencies": {
-    "@replit/vite-plugin-cartographer": "^0.0.1",
     "@replit/vite-plugin-runtime-error-modal": "^0.0.1",
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.10.5",
