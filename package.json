@@ -10,7 +10,7 @@
     "dev:client": "npm run dev --workspace=client",
     "install-deps": "npm install && cd client && npm install",
     "setup": "npm install && cd client && npm install",
-    "prepare": "cd client && npm install"
+    "prepare": ""
   },
   "workspaces": [
     "client"
