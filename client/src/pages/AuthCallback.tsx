@@ -2,22 +2,27 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AuthCallback() {
   const [, setLocation] = useLocation();
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleAuthCallback = async () => {
       try {
         // Get the URL hash (everything after the # symbol)
         const hashParams = window.location.hash;
+        const queryParams = new URLSearchParams(window.location.search);
         
-        if (!hashParams) {
-          setError("No authentication data found in URL");
+        // Check if we have an error in the URL
+        if (queryParams.get('error')) {
+          const errorDescription = queryParams.get('error_description') || 'Authentication failed';
+          setError(decodeURIComponent(errorDescription));
           return;
         }
-
+        
         console.log("Processing auth callback...");
         
         // Exchange the auth code for a session
@@ -35,6 +40,11 @@ export default function AuthCallback() {
           // Clean up the URL
           window.history.replaceState({}, document.title, window.location.pathname);
           
+          toast({
+            title: "Authentication successful",
+            description: "You have been signed in successfully",
+          });
+          
           // Redirect to dashboard
           setLocation("/dashboard");
         } else {
@@ -47,7 +57,7 @@ export default function AuthCallback() {
     };
 
     handleAuthCallback();
-  }, [setLocation]);
+  }, [setLocation, toast]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
