@@ -27,5 +27,6 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
+  // Use the root directory for environment variables
   envDir: "./",
 });

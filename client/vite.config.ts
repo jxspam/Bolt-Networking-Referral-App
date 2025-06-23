@@ -14,4 +14,6 @@ export default defineConfig({
     port: 5173,
     host: true,
   },
+  // Look for .env files in the root directory
+  envDir: '../'
 })
