@@ -8,24 +8,28 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "tsx watch server/index.ts",
     "dev:client": "npm run dev --workspace=client",
-    "install-deps": "npm install && npm install --workspace=client",
-    "setup": "npm install && npm install --workspace=client",
-    "postinstall": "npm install --workspace=client"
+    "install-deps": "npm install && cd client && npm install",
+    "setup": "npm install && cd client && npm install",
+    "prepare": "cd client && npm install"
   },
   "workspaces": [
     "client"
   ],
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
+    "autoprefixer": "^10.4.16",
     "bcryptjs": "^2.4.3",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "drizzle-orm": "^0.29.3",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "postcss": "^8.4.32",
     "postgres": "^3.4.3",
+    "tailwindcss": "^3.4.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
