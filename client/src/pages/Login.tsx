@@ -204,6 +204,7 @@ export default function Login() {
           description: error.message || "Failed to sign in with Google",
           variant: "destructive",
         });
+        setIsLoading(false);
       }
       
       // The user will be redirected to Google OAuth consent screen
@@ -215,7 +216,6 @@ export default function Login() {
         description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -243,6 +243,7 @@ export default function Login() {
           description: error.message || "Failed to sign in with Google",
           variant: "destructive",
         });
+        setIsLoading(false);
       }
       
       // The user will be redirected to Google OAuth flow
