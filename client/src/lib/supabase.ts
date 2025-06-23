@@ -7,7 +7,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Please check your .env file in the project root directory and ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set.')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  }
+})
 
 // Fix for TypeScript errors with user_metadata in the auth API
 // This doesn't affect runtime behavior but helps with type checking

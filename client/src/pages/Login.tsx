@@ -168,14 +168,15 @@ export default function Login() {
         description: error.message,
         variant: "destructive",
       });
+      setIsLoading(false);
     } else {
       toast({
         title: "Welcome back!",
         description: "You have successfully logged in.",
       });
       setLocation("/dashboard");
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   // Handle Google Sign-up

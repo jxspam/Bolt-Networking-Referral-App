@@ -25,47 +25,40 @@ function App() {
   
   useEffect(() => {
     // Handle hash fragment from OAuth redirects
-    const handleHashFragment = async () => {
-      // Check if URL contains access_token in the hash fragment (OAuth redirect)
-      if (window.location.hash && window.location.hash.includes('access_token=')) {
-        try {
-          // Set loading to true while we process the hash
-          setLoading(true);
-          
-          // Let Supabase handle the hash fragment
-          const { data, error } = await supabase.auth.getSession();
+    const handleAuthCallback = async () => {
+      try {
+        // Check if we have a hash fragment from OAuth
+        if (window.location.hash && window.location.hash.includes('access_token=')) {
+          // Process the hash fragment
+          const { data, error } = await supabase.auth.getSessionFromUrl({
+            storeSession: true
+          });
           
           if (error) {
-            console.error("Error processing auth redirect:", error);
+            console.error("Error processing auth callback:", error);
           } else if (data?.session) {
+            console.log("Successfully processed auth callback");
             setSession(data.session);
             
-            // Clean up the URL by removing the hash fragment
-            window.history.replaceState(null, '', window.location.pathname);
-            
-            // Redirect to dashboard
-            window.location.href = '/dashboard';
+            // Clean up the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
             return;
           }
-        } catch (err) {
-          console.error("Error handling OAuth redirect:", err);
         }
+      } catch (err) {
+        console.error("Error handling auth callback:", err);
       }
-    };
-    
-    // Process hash fragment first
-    handleHashFragment();
-    
-    // Then get the current session
-    const getSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      
+      // If no hash or after processing, get the current session
+      const { data: { session } } = await supabase.auth.getSession();
       setSession(session);
       setLoading(false);
     };
-    getSession();
 
+    // Call the function to handle auth callback
+    handleAuthCallback();
+
+    // Set up auth state change listener
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         console.log("Auth state changed:", event);
