@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // This is a special debug configuration for Vite
@@ -16,8 +15,7 @@ export default defineConfig({
           ["babel-plugin-transform-vite-meta-env"],
         ],
       },
-    }),    // Improved error overlay
-    runtimeErrorOverlay(),
+    }),
     // Support for absolute imports and path aliases
     tsconfigPaths(),
   ],
