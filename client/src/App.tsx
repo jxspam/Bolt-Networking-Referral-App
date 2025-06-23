@@ -16,7 +16,6 @@ import ReferralHistory from "@/pages/ReferralHistory";
 import Earnings from "@/pages/Earnings";
 import NotFound from "@/pages/not-found";
 import Login from "@/pages/Login";
-import AuthCallback from "@/pages/AuthCallback";
 import { supabase } from "./lib/supabase";
 import { useEffect, useState } from "react";
 
@@ -26,7 +25,29 @@ function App() {
   
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      // First check for session in URL (for OAuth redirects)
+      try {
+        const currentUrl = window.location.href;
+        if (currentUrl.includes('access_token') || currentUrl.includes('code=')) {
+          console.log("Detected auth parameters in URL, attempting to process...");
+          const { data, error } = await supabase.auth.getSessionFromUrl();
+          if (error) {
+            console.error("Error getting session from URL:", error);
+          } else if (data.session) {
+            console.log("Successfully retrieved session from URL");
+            setSession(data.session);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (urlError) {
+        console.error("Error processing auth URL parameters:", urlError);
+      }
+      
+      // Then check for existing session
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setSession(session);
       setLoading(false);
     };
@@ -40,6 +61,11 @@ function App() {
         // Redirect to login when signing out
         if (event === 'SIGNED_OUT') {
           window.location.href = '/login';
+        }
+        
+        // Redirect to dashboard when signing in
+        if (event === 'SIGNED_IN') {
+          window.location.href = '/dashboard';
         }
       }
     );
@@ -56,13 +82,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />        
+        <Toaster />
         <Switch>
           <Route path="/login">
             {session ? <Redirect to="/dashboard" /> : <Login />}
-          </Route>
-          <Route path="/auth/callback">
-            <AuthCallback />
           </Route>
           <Route path="/">
             {session ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
