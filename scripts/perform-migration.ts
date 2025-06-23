@@ -1,10 +1,6 @@
 import { db } from "../server/db";
-import { neonConfig } from '@neondatabase/serverless';
-import ws from "ws";
 import { createClient } from '@supabase/supabase-js';
-import type { QueryResult } from '@neondatabase/serverless';
-
-neonConfig.webSocketConstructor = ws;
+import type { QueryResult } from 'postgres';
 
 // Helper function to get rows from QueryResult
 function getRows<T>(result: QueryResult<Record<string, unknown>>): T[] {
