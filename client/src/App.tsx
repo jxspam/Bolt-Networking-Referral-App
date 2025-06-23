@@ -22,7 +22,37 @@ import { useEffect, useState } from "react";
 function App() {
   const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
+    // Handle hash fragment from OAuth redirects
+    const handleHashFragment = async () => {
+      // Check if URL contains access_token in the hash fragment (OAuth redirect)
+      if (window.location.hash && window.location.hash.includes('access_token=')) {
+        // Set loading to true while we process the hash
+        setLoading(true);
+        
+        // Let Supabase handle the hash fragment
+        const { data, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error("Error processing auth redirect:", error);
+        } else if (data?.session) {
+          setSession(data.session);
+          
+          // Clean up the URL by removing the hash fragment
+          window.history.replaceState(null, '', window.location.pathname);
+          
+          // Redirect to dashboard
+          window.location.href = '/dashboard';
+          return;
+        }
+      }
+    };
+    
+    // Process hash fragment first
+    handleHashFragment();
+    
+    // Then get the current session
     const getSession = async () => {
       const {
         data: { session },
@@ -56,10 +86,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />        <Switch>
+        <Toaster />        
+        <Switch>
           <Route path="/login">
             {session ? <Redirect to="/dashboard" /> : <Login />}
-          </Route>          <Route path="/">
+          </Route>          
+          <Route path="/">
             {session ? <Redirect to="/dashboard" /> : <Redirect to="/login" />}
           </Route>
           <Route path="/:rest*">

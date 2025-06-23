@@ -190,6 +190,10 @@ export default function Login() {
             access_type: 'offline',
             prompt: 'consent',
           },
+          data: {
+            role: role,
+            tier: "standard"
+          }
         }
       });
       
@@ -228,7 +232,7 @@ export default function Login() {
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
-          },
+          }
         }
       });
       
@@ -250,7 +254,6 @@ export default function Login() {
         description: error.message || "Failed to sign in with Google",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
