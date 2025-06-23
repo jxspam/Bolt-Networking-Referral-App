@@ -138,6 +138,7 @@ export default function Login() {
             description: "Please check your email for a verification link.",
           });
         }
+        setIsLoading(false);
       }
     } catch (err: any) {
       console.error("Signup error:", err);
@@ -184,10 +185,10 @@ export default function Login() {
     try {
       setIsLoading(true);
       
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -200,7 +201,6 @@ export default function Login() {
       });
       
       if (error) {
-        console.error("Google sign-in error:", error);
         toast({
           title: "Google Sign-In Error",
           description: error.message || "Failed to sign in with Google",
@@ -227,10 +227,10 @@ export default function Login() {
     try {
       setIsLoading(true);
       
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/dashboard`,
+          redirectTo: `${window.location.origin}/auth/callback`,
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
@@ -239,7 +239,6 @@ export default function Login() {
       });
       
       if (error) {
-        console.error("Google sign-in error:", error);
         toast({
           title: "Google Sign-In Error",
           description: error.message || "Failed to sign in with Google",
