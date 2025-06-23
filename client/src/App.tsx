@@ -28,23 +28,27 @@ function App() {
     const handleHashFragment = async () => {
       // Check if URL contains access_token in the hash fragment (OAuth redirect)
       if (window.location.hash && window.location.hash.includes('access_token=')) {
-        // Set loading to true while we process the hash
-        setLoading(true);
-        
-        // Let Supabase handle the hash fragment
-        const { data, error } = await supabase.auth.getSession();
-        
-        if (error) {
-          console.error("Error processing auth redirect:", error);
-        } else if (data?.session) {
-          setSession(data.session);
+        try {
+          // Set loading to true while we process the hash
+          setLoading(true);
           
-          // Clean up the URL by removing the hash fragment
-          window.history.replaceState(null, '', window.location.pathname);
+          // Let Supabase handle the hash fragment
+          const { data, error } = await supabase.auth.getSession();
           
-          // Redirect to dashboard
-          window.location.href = '/dashboard';
-          return;
+          if (error) {
+            console.error("Error processing auth redirect:", error);
+          } else if (data?.session) {
+            setSession(data.session);
+            
+            // Clean up the URL by removing the hash fragment
+            window.history.replaceState(null, '', window.location.pathname);
+            
+            // Redirect to dashboard
+            window.location.href = '/dashboard';
+            return;
+          }
+        } catch (err) {
+          console.error("Error handling OAuth redirect:", err);
         }
       }
     };

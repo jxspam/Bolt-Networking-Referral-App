@@ -70,6 +70,7 @@ export default function Login() {
             description: signUpError.message,
             variant: "destructive",
           });
+          setIsLoading(false);
           return;
         }
 
@@ -86,6 +87,7 @@ export default function Login() {
           await sendPhoneVerification(phone, data.user.id);
         }
         
+        setIsLoading(false);
         return;
       } catch (primaryError) {
         // Fallback approach: Split the signup into two steps
@@ -144,7 +146,6 @@ export default function Login() {
         description: err.message || "An unexpected error occurred",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -284,6 +285,7 @@ export default function Login() {
       });
       
       setShowPhoneVerification(true);
+      setIsLoading(false);
       
     } catch (error: any) {
       toast({
@@ -291,7 +293,6 @@ export default function Login() {
         description: error.message || "Failed to send verification code",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
@@ -322,6 +323,7 @@ export default function Login() {
       
       // Redirect to dashboard or complete registration
       setLocation("/dashboard");
+      setIsLoading(false);
       
     } catch (error: any) {
       toast({
@@ -329,7 +331,6 @@ export default function Login() {
         description: error.message || "Failed to verify code",
         variant: "destructive",
       });
-    } finally {
       setIsLoading(false);
     }
   };
